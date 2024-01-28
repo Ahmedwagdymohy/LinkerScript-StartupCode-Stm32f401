@@ -1,3 +1,4 @@
 MEMORY{
-    
+    RAM (xrw) : ORIGIN = 0x20000000, LENGTH = 64kB
+    FLASH
 }
