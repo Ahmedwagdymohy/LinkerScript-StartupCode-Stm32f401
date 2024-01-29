@@ -1,4 +1,4 @@
-/******************* Startup Code *********************/
+/******************** Startup Code *********************/
 
 // 1. setting the interrupt vector table on [.isr_vector] section
 
