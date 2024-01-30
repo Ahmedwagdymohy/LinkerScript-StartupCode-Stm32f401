@@ -4,6 +4,18 @@ extern int _estack;
 void Reset_Handler(void);
 void NMI_Handler(void);
 void HardFault_Handler(void);
+void MemManage_Handler(void);
+void BusFault_Handler(void);
+void UsageFault_Handler(void);
+void SVCall_Handler(void);
+void DebugMonitor_Handler(void);
+void PendCV_Handler(void);
+void Systick_Handler(void);
+void WWDG_Handler(void);
+void PVD_Handler(Void);
+void TAMP_STAMP_Handler(Void);
+
+
 // 1. setting the interrupt vector table on [.isr_vector] section
 
 typedef void (*const PF_Handler)(void);   //make a pointer to function with data type
@@ -17,9 +29,32 @@ __attribute__((section(".isr_vector"),used)) //used keyword is used to guide all
 //making the vector table and filling it with the data from the datasheet
 PF_Handler Vector_table[]={ 
     (PF_Handler)&_estack,
-    &Reset_Handler,
-    &NMI_Handler,          
-    &HardFault_Handler,    
+    Reset_Handler,
+    NMI_Handler,          
+    HardFault_Handler,    
+    MemManage_Handler,
+    BusFault_Handler,
+    UsageFault_Handler,
+    0,
+    0,
+    0,
+    0,
+    SVCall_Handler,
+    DebugMonitor_Handler,
+    0,
+    PendCV_Handler,
+    Systick_Handler,
+    
+
+    /******************************************************************************************************/
+    /**************************************      External Intrrupts    ************************************/
+    /******************************************************************************************************/    
+    WWDG_Handler,
+    PVD_Handler,
+    TAMP_STAMP_Handler,
+
+
+
 
               };
 
@@ -37,6 +72,53 @@ void HardFault_Handler(void){
 
     
 }
+
+void MemManage_Handler(void){
+
+
+    
+}
+void BusFault_Handler(void){
+
+
+
+}
+void UsageFault_Handler(void){
+
+
+}
+void SVCall_Handler(void){
+
+    
+}
+void DebugMonitor_Handler(void){
+
+
+}
+void PendCV_Handler(void){
+
+
+}
+void Systick_Handler(void){
+
+
+}
+void WWDG_Handler(void){
+
+
+}
+void PVD_Handler(Void){
+
+
+}
+void TAMP_STAMP_Handler(Void){
+
+
+}
+
+
+
+
 //2. intialize the stack pointer
 
 //3.copy [.data] section from Flash to RAM
