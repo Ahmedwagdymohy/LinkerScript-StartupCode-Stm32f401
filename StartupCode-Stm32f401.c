@@ -1,3 +1,6 @@
+#include <stdio.h>
+#include "std_types.h"
+
 /******************** Startup Code to be in .init *********************/
 //2. intialize the stack pointer
 extern int _estack;
