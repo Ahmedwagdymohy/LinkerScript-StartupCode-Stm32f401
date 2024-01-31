@@ -1,3 +1,34 @@
+/* the linkerScript parts is used by the startup code to 
+ * copy the initial values of data from flash to RAM
+ * and to zero-fill the uninitialized data area
+ * 
+ * the .isr_vector section is used by the startup code to 
+ * copy the initial values of data from flash to RAM
+ * and to zero-fill the uninitialized data area
+ * 
+ * the .init section is used by the startup code to 
+ * copy the initial values of data from flash to RAM
+ * and to zero-fill the uninitialized data area
+ * 
+ * the .data section is used by the startup code to 
+ * copy the initial values of data from flash to RAM
+ * and to zero-fill the uninitialized data area
+ * 
+ * the .bss section is used by the startup code to 
+ * copy the initial values of data from flash to RAM
+ * and to zero-fill the uninitialized data area
+ * 
+ * the .text section is used by the startup code to 
+ * copy the initial values of data from flash to RAM
+ * and to zero-fill the uninitialized data area
+ * 
+ * the .rodata section is used by the startup code to 
+ * copy the initial values of data from flash to RAM
+ * and to zero-fill the uninitialized data area
+ * 
+ */
+
+
 _estack = ORIGIN(RAM) + LENGTH(RAM);
 
 MEMORY
@@ -8,6 +39,9 @@ MEMORY
 
 
 SECTIONS{
+    /************************************************************************************/
+    /*******************************   .isr_vector   ************************************/
+    /************************************************************************************/
     
     .isr_vector :
     {
@@ -17,6 +51,11 @@ SECTIONS{
 
     }>FLASH
 
+
+
+    /************************************************************************************/
+    /*******************************   .init   ************************************/
+    /************************************************************************************/
 
 
     .init:{
@@ -29,6 +68,13 @@ SECTIONS{
 _sdata_FLASH = LOADADDR(.data);
  
 
+
+    /************************************************************************************/
+    /*******************************   .data   ************************************/
+    /************************************************************************************/
+
+
+
     .data:{
         _sdata = .; 
         *(.data)
@@ -38,12 +84,26 @@ _sdata_FLASH = LOADADDR(.data);
     }>RAM AT>FLASH
 
 
+    /************************************************************************************/
+    /*******************************   .bss   ************************************/
+    /************************************************************************************/
+
+
 
     .bss:{
+        _sbss_Ram= .;
         *(.bss)
         *(.bss*)
+        _ebss_Ram=.;
 
-    }>RAM
+    }>RAM   
+
+
+
+    /************************************************************************************/
+    /*******************************   .text   ************************************/
+    /************************************************************************************/
+
 
 
 
@@ -52,6 +112,14 @@ _sdata_FLASH = LOADADDR(.data);
         *(.text*)
 
     }>FLASH
+
+
+
+
+    /************************************************************************************/
+    /*******************************   .rodata   ************************************/
+    /************************************************************************************/
+
 
 
     .rodata:{

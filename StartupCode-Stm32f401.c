@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include "std_types.h"
+#define NULL (void*)0
 
 /******************** Startup Code to be in .init *********************/
 //2. intialize the stack pointer
@@ -7,7 +8,9 @@ extern int _estack;
 extern int _sdata_FLASH;/*here we extern the varialbles of the addresses of the data section of the RAM*/
 extern int _sdata;/*start and end (e & s) and the start of the data of flash*/
 extern int _edata;/*so we can move the with startup code from Flash to ram with ((*sdata_Flash++ = *sdata++)) so
-                    we loop on the size of the .data section we have till we transfer all the data*/
+                     we loop on the size of the .data section we have till we transfer all the data */
+extern int _sbss_Ram;
+extern int _ebss_Ram;
 
 
 void Reset_Handler(void);
@@ -83,26 +86,48 @@ PF_Handler Vector_table[]={
 
 
 //impelementation for the functions of the inttrupt table
-void __attribute__ ((section(".init"),used)) default_Handler(void){
-    while (1)
-    {
-        /* code */
-    }
-    
-}
+
 
 //the real usage of the startup code goes here ,where the startup code start when we Reset or start from zer0!
 
-void __attribute__((section(".isr_vector"),used)) Reset_Handler(void){
+int *memorySource = NULL;
+int *memoryDestination = NULL;
+int memorySize = 0;
+
+memorySource = (int*) &_sdata_FLASH;
+memoryDestination = (int*) &_sdata;
+//I want to store the memory size of the data section of the ram in the memorySize variable 
+
+
+
+void __attribute__((section(".init"),used)) Reset_Handler(void){
 
 //3.copy [.data] section from Flash to RAM
+for(u32 i =0 ; i<(_edata -_sdata); i++){
+    (_sdata_FLASH++) = (_sdata++);
+
+
+}
+
 
 //4. Reverse[.bss] section on Ram and initialize with zero
-
+for (u32 i =0; i<(_sbss_Ram) - (_ebss_Ram);i++){
+    
+}
 //5. call main() function
 
 
 }
+
+void __attribute__((section(".init"),used)) default_Handler(void){
+    while (1)
+    {
+        /* code */
+    }
+}
+
+
+
 void NMI_Handler(void){
 
 }
